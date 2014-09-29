@@ -58,8 +58,9 @@ public class WardMapper {
     private static Vector2f getCoordinates(final Entity entity) {
         Vector2f origin = entity.<Vector2f>getProperty("m_vecOrigin");
         int cellWidth = 1 << entity.<Integer>getProperty("m_cellbits");
-        float x =((entity.<Integer>getProperty("m_cellX") * cellWidth - 16384 + (origin.x) / 128) + (16384/2))/16384;
-        float y = ((entity.<Integer>getProperty("m_cellY") * cellWidth - 16384 + (origin.y) / 128) + (16384/2))/16384;
+        int cellWidthSquared = cellWidth * cellWidth;
+        float x = ((entity.<Integer>getProperty("m_cellX") * cellWidth - cellWidthSquared + origin.x) + (cellWidthSquared/2))/cellWidthSquared;
+        float y = ((entity.<Integer>getProperty("m_cellY") * cellWidth - cellWidthSquared + origin.y) + (cellWidthSquared/2))/cellWidthSquared;
         return new Vector2f(x, 1 - y);
     }
 }
